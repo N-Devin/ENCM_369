@@ -60,12 +60,21 @@ abc:	.word	-32, -8, -4, -16, -128, -64
 	.globl	main
 main:
 	la	s0, abc	        	# p = abc
+	add	s3, zero, zero		# max = 0
+	lw	s3, (s0)		# max = abc[0]
 	addi	s1, s0, 24		# end = p + 6
 	add	s2, zero, zero	        # sum = 0 
 L1:
 	beq	s0, s1, L2		# if (p == end) goto L2
 	lw	t0, (s0)		# t0 = *p
 	add	s2, s2, t0		# sum += t0
+	lw	t0,(s0)
+	bgt	t0,s3,UP		# if abc > max go to update
+	addi	s0, s0, 4		# p++
+	j	L1
+	
+UP:	
+	lw	s3,(s0)			# max = abc[i]
 	addi	s0, s0, 4		# p++
 	j	L1
 L2:		

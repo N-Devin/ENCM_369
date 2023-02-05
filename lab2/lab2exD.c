@@ -27,7 +27,7 @@
 //      the address of alpha[0], and a similar thing for beta[k].
 //
 //   5. Test your translation using RARS.
-
+#include <stdio.h>
 
 int alpha[8] = { 0xb1, 0xe1, 0x91, 0xc1, 0x81, 0xa1, 0xf1, 0xd1 };
 int beta[8] = { 0x0, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70 };
@@ -46,6 +46,7 @@ int main(void)
     if (*p < min)
       min = *p;
   }
+  printf("min = %d original\n", min);
       
   // Copy elements from beta to alpha in reverse order,
   // writing over the initial values in alpha.
@@ -56,6 +57,7 @@ int main(void)
     j++;
     k--;
   }
-
+  for (int i = 0; i < 8; i++)
+            printf("%d ", beta[i]);
   return 0;
 }
