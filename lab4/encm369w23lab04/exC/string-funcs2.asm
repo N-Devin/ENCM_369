@@ -38,6 +38,7 @@ main_rv:
 	.globl	copycat
 copycat:
 
+
 L1:	
 	lbu	t1, (a1)	# t1 = *src1
 	beq	t1, zero, L2	#if (*src1 == '\0') goto L2
@@ -54,35 +55,38 @@ L2:
 	bne	t2,zero,L2	# if (c == '\0') goto 
 	jr	ra
 	
+	
 
 #	void lab4reverse(const char *str)
 #	
 	.text
 	.globl	lab4reverse
 lab4reverse:
-
-
-	li	t1,0		# back = 0
+	
+	add	t0,zero,zero	# t0 = back = 0
+	
 K1:	
-	lbu	t0,(a0)		# t0 = &str
-	add	t0,t0,t1	# str[back]
-	beq	t0,zero,K2	# if (str[back] == '\0') goto L2
-	addi	t1,t1,1		# back++;
-	j	L1		
+	add	t1,a0,t0	# str[back]
+	lbu	t5,(t1)
+	beq	t5,zero,K2	# if (str[back] == '\0') goto L2
+	addi	t0,t0,1		# back++
+	j	K1
+		
 K2:	
-	addi	t1,t1,-1	# back--;
-	li	t2,0		# front = 0
+	li	t1,0		# t1 = front = 0
+	addi	t0,t0,-1	# back--
 
 K3:		
-	ble	t1,t2,K4	# if (back <= front) goto L4
-	lbu	t3,(t0)		# c = str[back]
-	add	t4,t4,t2	# str[front]
-	sb	t4,(t0)		# str[back] = str[front]
-	lbu	t3,(t4)		# str[front] = c
-	addi	t1,t1,-1	# back--
-	addi	t2,t2,1		# front ++
+	ble	t0,t1,K4	# if (back <= front) goto L4
+	add	t2,a0,t0	# t2 = c = str[back]
+	lbu	t6,(t2)
+	add	t3,a0,t1	# t3 = str[front]
+	lbu	t4,(t3)		# t4 = letter at str[front]
+	sb	t4,(t2)		# str[back] = str[front]
+	sb	t6,(t3)		# str[front] = c
+	addi	t0,t0,-1	# back--
+	addi	t1,t1,1		# front++
 	j	K3
-
 K4:
 	jr	ra
 

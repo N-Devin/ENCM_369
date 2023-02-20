@@ -79,19 +79,29 @@ void write_in_binary(char *str, unsigned int word)
   str[39] = '\0';
   index = 38;
   mask = 1;            // in binary: [ 31 zeros ]_1
-  while (1) {
-    if ((word & mask) == 0)
+{
+L1:
+    if ((word & mask) == 0) goto L2; 
+    str[index] = digit1; 
+    goto L3;
+      
+L2:
       str[index] = digit0;
-    else
-      str[index] = digit1;
+L3:
+
     index--;
     bn++;
     mask = mask << 1;
-    if (bn == 32)
-      break;
-    if ((bn & 3) == 0) {  // if bn is a multiple of 4 ...
+
+    if (bn == 32) goto L6;
+
+    if ((bn & 3) != 0)  goto L4;
+    {  // if bn is a multiple of 4 ...
       str[index] = under;
       index--;
     }
+L4:;
+goto L1;
   }
+L6:;
 }

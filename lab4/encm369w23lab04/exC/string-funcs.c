@@ -31,17 +31,28 @@ void lab4reverse(char *str)
   int front, back;
   char c;
   back = 0;
-  while (str[back] != '\0')
-    back++;
-  back--;
-  front = 0;
-  while (back > front) {
-    c = str[back];
-    str[back] = str[front];
-    str[front] = c;
+
+
+
+  L1:  if (str[back] == '\0') goto L2;
+       back++;
+       goto L1;
+  L2:;
+
     back--;
-    front++;
-  }
+    front = 0;
+
+L3:   if (back <= front) goto L4;
+      c = str[back];
+      str[back] = str[front];
+      str[front] = c;
+      back--;
+      front++;
+      goto L3;
+
+L4:;
+
+
 }
 
 void print_in_quotes(const char *str)

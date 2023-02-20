@@ -185,10 +185,37 @@ write_in_binary:
 	# Time-saving hint: This is a leaf procedure!
 	# Leave str and word in a0 and a1, and
 	# use t-registers for local variables.
-
-	# Get rid of the next 3 lines before writing a solution. 
-	li	t0, '?'
-	sb	t0, 0(a0)		# str[0] = 'Z'
-	sb	zero, 1(a0)		# terminate string
 	
+	li	t0,0		# t0 = 0 = bn
+  	li	t1,'0'		# t1 = digit0 = '0'
+ 	li	t2,'1'		# t2 = digit1 = '1'
+	li	t3,'_'		# t3 = _ = under
+	addi	t4,t0,38	# t4 = index = 38
+	sb	zero,39(a0)	# last element = '/0'
+	li 	t5,1		# mask = 1
+L1:
+	and	t6,a1,t5	# word & mask
+	beq	t6,zero,L2	# if ((word & mask) == 0) goto L2
+	add	t6,a0,t4	# str[index]
+	sb	t2,(t6)		# str[index] = digit1
+	j	L3	 
+L2:	
+	add	t6,a0,t4	# str[index] = digit0
+	sb	t1,(t6)
+L3:
+	addi	t4,t4,-1	# index--
+	addi	t0,t0,1		# bn++
+	slli	t5,t5,1		# mask = mask << 1
+	li	t6,32
+	beq	t0,t6,L6	# if (bn == 32) goto L6
+	
+	andi	t6,t0,3
+	bne	t6,zero,L4	# if ((bn & 3) != 0)  goto L4
+	add	t6,a0,t4	# str[index]
+	sb	t3,(t6)		# str[index] = under
+	addi	t4,t4,-1	# index--
+L4:
+	j	L1
+L6:
+		
 	jr	ra
