@@ -51,7 +51,7 @@ main:
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
-	.cfi_def_cfa_register 6
+	.cfi_def_cfa_register 6x
 	subq	$80, %rsp
 	movq	%fs:40, %rax
 	movq	%rax, -8(%rbp)

@@ -10,3 +10,5 @@ beta:	.word	0x456
 	lw	t1, alpha
 	li	t2, 0x789
 	sw	t2, beta, t3
+
+	

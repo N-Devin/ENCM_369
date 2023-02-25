@@ -1120,7 +1120,7 @@ double timespec2ns(const struct timespec *tp)
 
 int main(void)
 {
-  for (int i = 0; i < ((int) 1e5); i++)
+  for ( int i = 0; i < ((int) 1e5); i++)
     arr[i] = i;
 
   struct timespec start, stop;
